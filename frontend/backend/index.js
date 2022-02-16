@@ -2,6 +2,7 @@ const express = require('express');
 const { createTask } = require('./controllers/controllerCreatTas');
 const { getTaskList } = require('./controllers/controllerGetTaskList');
 const { deleteTask } = require('./controllers/controllerDeleteTask');
+const { updateTask } = require('./controllers/controllerUpdateTask');
 const cors = require('cors');
 
 const app = express();
@@ -14,7 +15,7 @@ app.use(cors());
 app.post('/task', createTask);
 app.get('/task', getTaskList);
 app.delete('/task/:id', deleteTask);
-// app.put('/task', editTask);
+app.put('/task/:id', updateTask);
 
 
 app.use(error);

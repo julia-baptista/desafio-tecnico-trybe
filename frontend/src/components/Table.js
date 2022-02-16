@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useRef, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 // import ReactDOMServer from 'react-dom/server';
 import TableRow from './TableRow';
@@ -16,8 +16,15 @@ const Table = () => {
   // });
 
   const [nameTask, setNameTask] = useState('');
-
   const [statusTask, setStatusTask] = useState('');
+
+
+  // useEffect(() => { 
+  //   setNewTask({
+  //     name: nameTask,
+  //     status: statusTask
+  //   })
+  // }, [nameTask, statusTask]);
   
   // useEffect(() => {
   //   setTaskList(tasks);
@@ -59,45 +66,11 @@ const Table = () => {
     window.location.reload();
   };
 
-  // https://stackoverflow.com/questions/44315547/ternary-in-jsx-to-add-selected-attribute-to-option
-  // const createForm = (_id, name, status, createdAt, index ) => (
-  //     <>
-  //       <td>{index + 1}</td>
-  //       <td><input type="text" name="name" value={name} onChange={handleChange}/></td>
-  //       <td>
-  //         <select
-  //           name="status"
-  //           onChange={handleChange}
-  //         >
-  //           <option value="pendente" selected = {status === "pendente" ? true : false}>pendente</option>
-  //           <option value="em andamento" selected = {status === "em andamento" ? true : false} >em andamento</option>
-  //           <option value="pronto" selected = {status === "pronto" ? true : false}>pronto</option>
-  //         </select>
-  //       </td>
-  //       <td>{createdAt}</td>
-  //       <td>
-  //         <button data-id={_id} onClick={handleDelete}>
-  //           DELETAR
-  //         </button>
-  //         <button data-id={_id} >
-  //           EDITAR
-  //         </button>
-  //         <button data-id={_id}>
-  //           SALVAR
-  //         </button>
-  //       </td>
-  //     </>
-  //   );
-
   // https://reactjs.org/docs/react-dom-server.html#rendertostaticmarkup
   // https://www.geeksforgeeks.org/how-to-pass-a-parameter-to-an-event-handler-or-callback/
   const handleEdit = (_id, name, status, createdAt, index, {target}) => {
-    setNameTask({
-      name,
-    });
-    setStatusTask({
-      status,
-    });
+    setNameTask(name);
+    setStatusTask(status);
     const tableRow = target.parentNode.parentNode;
     // const form = ReactDOMServer.renderToString(createForm(_id, name, status, createdAt, index));
     tableRow.innerHTML = "";
@@ -110,10 +83,32 @@ const Table = () => {
         index={index}
         setNameTask={setNameTask}
         setStatusTask={setStatusTask}
+        nameTask={nameTask}
+        statusTask={statusTask}
       />,
     tableRow);
     console.log(tableRow);
   };
+
+  // https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
+  // async function HandleSave(id) {
+    
+    // const prevName = usePrevious(nameTask);
+    
+    // console.log(prevName);
+
+    // await fetch(`http://localhost:4000/task/${id}`, {
+    //   method: 'PUT',
+    //   headers: {
+    //     'Content-type': 'application/json', 
+    //   },
+    //   body: JSON.stringify(newTask),
+    // })
+    // setNameTask('');
+    // setStatusTask('');
+
+    // window.location.reload();
+  // };
 
   if (!tasks) return <p>Loading ...</p>
   return(

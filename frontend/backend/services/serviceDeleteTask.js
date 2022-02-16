@@ -5,7 +5,7 @@ const deleteTaskService = async (id) => {
   const error = { 
     status: 422,
     code: 'invalid_data',
-    message: 'Wrong sale ID format',
+    message: 'Task does not exist',
   };
   if (!task) throw error;
   await deleteTaskModel(id);
