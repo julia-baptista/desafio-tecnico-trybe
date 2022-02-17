@@ -4,6 +4,7 @@ import TaskContext from './TaskContext';
 
 const TaskProvider = ({children}) => {
   const [tasks, setTasks] = useState([]);
+  const [sortedTasks, setSortedTasks] = useState(tasks);
 
 
    // ComponentDidMount
@@ -25,8 +26,25 @@ const TaskProvider = ({children}) => {
     fetchTaskList();
   }, []);
 
+  useEffect(() => {
+    setSortedTasks(tasks);
+  }, [tasks]);
+
+  // https://stackoverflow.com/questions/1129216/sort-array-of-objects-by-string-property-value 
+ 
+
+
+  // const sortByStatus = () => {
+  //   const sortedByName = tasks.sort((a,b) => (a.status.toLowerCase() > b.status.toLowerCase()) ? 1 : ((a.name < b.name) ? -1 : 0));
+  //   setSortedTasks(sortedByName);
+  //   console.log(sortedTask);
+  // }
+  // sortByName();
+
   const contextData = {
     tasks,
+    sortedTasks,
+    setSortedTasks
   }
 
   return (

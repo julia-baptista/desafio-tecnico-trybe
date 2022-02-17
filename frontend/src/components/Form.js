@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-// import TaskContext from '../context/TaskContext';
+import React, { useState, useContext } from 'react';
+import TaskContext from '../context/TaskContext';
 import "bootstrap/dist/css/bootstrap.min.css"
 
 const Form = () => {
-  // const { tasks } = useContext(TaskContext);
+  const { tasks, setSortedTasks, sortedTasks } = useContext(TaskContext);
 
   const [newTask, setNewTask] = useState({
     name: '',
@@ -37,6 +37,13 @@ const Form = () => {
     window.location.reload();
   };
 
+  const sortByName = () => {
+    const sortedByName = tasks.sort((a,b) => (a.name.toLowerCase() > b.name.toLowerCase()) ? 1 : ((a.name < b.name) ? -1 : 0));
+    // console.log(sortedByName);
+    setSortedTasks(sortedByName);
+    console.log(sortedTasks);
+  }
+
     return(
       <div>
         <div className="container">
@@ -59,6 +66,7 @@ const Form = () => {
               </select>      
               <input type='submit' className='btn btn-danger btn-block' value='Submit'/>
             </form>
+            <button onClick={() => sortByName() }>Ordenar pelo Nome</button>
           </div>
         </div>
       </div>

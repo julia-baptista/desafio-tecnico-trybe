@@ -1,58 +1,25 @@
-import React, { useContext, useState, useRef, useEffect } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
-// import ReactDOMServer from 'react-dom/server';
 import TableRow from './TableRow';
-
-// import React, { useContext } from 'react';
 import TaskContext from '../context/TaskContext';
 import "bootstrap/dist/css/bootstrap.min.css"
 
 const Table = () => {
-  const { tasks } = useContext(TaskContext);
-  // const [taskList, setTaskList] = useState([]);
-  // const [newTask, setNewTask] = useState({
-  //   name: '',
-  //   status: '',
-  // });
+  const { sortedTasks } = useContext(TaskContext);
+  const [updatedTasks, setUpdatedTasks] = useState(sortedTasks);
 
   const [nameTask, setNameTask] = useState('');
   const [statusTask, setStatusTask] = useState('');
 
+  useEffect(() => {
+    let test = [...sortedTasks]
+    setUpdatedTasks(test);
+  }, [sortedTasks]);
 
-  // useEffect(() => { 
-  //   setNewTask({
-  //     name: nameTask,
-  //     status: statusTask
-  //   })
-  // }, [nameTask, statusTask]);
-  
   // useEffect(() => {
-  //   setTaskList(tasks);
-  // }, [tasks]);
-
-  // console.log(tasks);
-  // console.log(taskList);
-
-  // const handleChange = ({ target: { value, name } }) => {
-  //   setNewTask({
-  //     ...newTask,
-  //     [name]: value,
-  //   });
-  // };
-
-  // const handleChangeName = ({ target: { value} }) => {
-  //   setNewTask({
-  //     ...newTask,
-  //     name: value,
-  //   });
-  // };
-
-  // const handleChangeStatus = ({ target: { value} }) => {
-  //   setNewTask({
-  //     ...newTask,
-  //     status: value,
-  //   });
-  // };
+  //   let test = [...sortedTasks]; // make a copy
+  //   setUpdatedTask( test);
+  // }, [ sortedTasks]);
 
   const handleDelete = async ({ target }) => {
     console.log(target.getAttribute('data-id'));
@@ -90,27 +57,9 @@ const Table = () => {
     console.log(tableRow);
   };
 
-  // https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
-  // async function HandleSave(id) {
-    
-    // const prevName = usePrevious(nameTask);
-    
-    // console.log(prevName);
+;
 
-    // await fetch(`http://localhost:4000/task/${id}`, {
-    //   method: 'PUT',
-    //   headers: {
-    //     'Content-type': 'application/json', 
-    //   },
-    //   body: JSON.stringify(newTask),
-    // })
-    // setNameTask('');
-    // setStatusTask('');
-
-    // window.location.reload();
-  // };
-
-  if (!tasks) return <p>Loading ...</p>
+  if (!updatedTasks) return <p>Loading ...</p>
   return(
     <div className="container">
       
@@ -126,7 +75,7 @@ const Table = () => {
         </thead>
         <tbody>
           {
-            tasks.map(( {_id, name, status, createdAt }, index) => (
+            updatedTasks.map(( {_id, name, status, createdAt }, index) => (
               <tr key={_id} >
                 <td>{ index + 1}</td>
                 <td>{name}</td>
