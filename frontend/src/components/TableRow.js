@@ -45,9 +45,6 @@ const TableRow = ({ _id, name, status, createdAt, index, setNameTask, setStatusT
             onChange={e => setStatusTask(e.target.value)}
             defaultValue={status}
           >
-            {/* <option value="pendente" selected = {status === "pendente" ? true : false}>pendente</option>
-            <option value="em andamento" selected = {status === "em andamento" ? true : false} >em andamento</option>
-            <option value="pronto" selected = {status === "pronto" ? true : false}>pronto</option> */}
             <option value="pendente">pendente</option>
             <option value="em andamento">em andamento</option>
             <option value="pronto">pronto</option>

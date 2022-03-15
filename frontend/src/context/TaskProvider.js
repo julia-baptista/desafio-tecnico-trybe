@@ -6,7 +6,6 @@ const TaskProvider = ({children}) => {
   const [tasks, setTasks] = useState([]);
   const [sortedTasks, setSortedTasks] = useState(tasks);
 
-
    // ComponentDidMount
    // https://stackoverflow.com/questions/67855897/why-do-i-get-error-neterr-connection-refused-with-json-server-post-request
    useEffect(() => {
@@ -20,11 +19,13 @@ const TaskProvider = ({children}) => {
       });
       const taskListObj = await taskListFetch.json();
       const taskList = taskListObj.taskList;
-      // console.log(taskList);
+      
       setTasks(taskList);
+      console.log('useEffect')
     };
     fetchTaskList();
   }, []);
+
 
   useEffect(() => {
     setSortedTasks(tasks);
@@ -43,6 +44,7 @@ const TaskProvider = ({children}) => {
 
   const contextData = {
     tasks,
+    setTasks,
     sortedTasks,
     setSortedTasks
   }

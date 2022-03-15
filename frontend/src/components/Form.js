@@ -3,7 +3,7 @@ import TaskContext from '../context/TaskContext';
 import "bootstrap/dist/css/bootstrap.min.css"
 
 const Form = () => {
-  const { tasks, setSortedTasks, sortedTasks } = useContext(TaskContext);
+  const { tasks, setSortedTasks, sortedTasks, setTasks } = useContext(TaskContext);
 
   const [newTask, setNewTask] = useState({
     name: '',
@@ -20,28 +20,36 @@ const Form = () => {
   // https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
   const onSubmit = async (event) => {
     event.preventDefault();
-    await fetch('http://localhost:4000/task', {
-      method: 'POST',
-      headers: {
-        'Content-type': 'application/json', 
-      },
-      body: JSON.stringify(newTask),
-    })
+    let result;
+    try {
+      result = await fetch('http://localhost:4000/task', {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json', 
+        },
+        body: JSON.stringify(newTask),
+      })
+    } catch(err) {
+      console.log(err)
+    }
 
-    // windo.location = '/'
-
+    const newTaskData = await result.json();
+    setTasks((prev) => ([
+      ...prev, newTaskData
+    ]));
+    
     setNewTask({
       ...newTask,
       name: '',
     })
-    window.location.reload();
   };
 
   const sortByName = () => {
     const sortedByName = tasks.sort((a,b) => (a.name.toLowerCase() > b.name.toLowerCase()) ? 1 : ((a.name < b.name) ? -1 : 0));
-    // console.log(sortedByName);
+    console.log(sortedByName);
     setSortedTasks(sortedByName);
     console.log(sortedTasks);
+    // window.location.reload();
   }
 
     return(
@@ -52,6 +60,7 @@ const Form = () => {
               <input
                 type= 'text'
                 name= 'name'
+                value={newTask.name}
                 placeholder= 'Tarefa'
                 onChange={handleChange}
                 className='form-control form-group'

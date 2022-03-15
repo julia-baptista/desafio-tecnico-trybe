@@ -1,4 +1,3 @@
-const { ObjectId } = require('mongodb');
 const connection = require('./connection');
 
 const createTaskModel = async (name, status) => {
